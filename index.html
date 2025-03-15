@@ -39,13 +39,13 @@
         <input id="stop_loss_price" type="number">
         <p class="info">交易價格不利時，此單要出場的價格。</p>
         
-        <button onclick="calc()">計算</button>
+        <button onclick="calcRisk()">計算</button>
         <h3>計算結果：</h3>
         <p id="result"></p>
     </div>
 
     <div class="watermark">© 2025 Mar－CC.</div>
 
-    <script>document.addEventListener("contextmenu",e=>e.preventDefault()),document.addEventListener("keydown",e=>{"F12"!==e.key&&(!e.ctrlKey||!e.shiftKey||"I"!==e.key&&"J"!==e.key)&&(!e.ctrlKey||"U"!==e.key)||e.preventDefault()});function hlErr(e){const t=document.getElementById(e);t.classList.add("error"),setTimeout(()=>t.classList.remove("error"),2e3)}function calc(){const e=document.getElementById("risk_amount"),t=document.getElementById("capital"),n=document.getElementById("risk_percent"),r=document.getElementById("entry_price"),o=document.getElementById("stop_loss_price"),i=document.getElementById("result");let c=parseFloat(e.value),l=parseFloat(t.value),a=parseFloat(n.value),s=parseFloat(r.value),u=parseFloat(o.value);if(isNaN(s)||s<=0)return i.innerText="請輸入有效的開倉價格！",hlErr("entry_price"),void 0;if(isNaN(u)||u<=0)return i.innerText="請輸入有效的止損價格！",hlErr("stop_loss_price"),void 0;let f=Math.abs(u-s);if(0===f)return void(i.innerText="開倉價格與止損價格不能相同！");let d=f/s;if((isNaN(c)||c<=0)&&(!isNaN(l)&&!isNaN(a)&&a>0?c=l*(a/100):(i.innerText="請輸入『預期損失金額』或『本金+預期虧損百分比』！",hlErr("risk_amount"),!1))){let p=c/d;i.innerText=`名義價值: ${p.toFixed(2)} USDT`}}</script>
+    <script>document.addEventListener("contextmenu",e=>e.preventDefault()),document.addEventListener("keydown",e=>{"F12"!==e.key&&(!e.ctrlKey||!e.shiftKey||"I"!==e.key&&"J"!==e.key)&&(!e.ctrlKey||"U"!==e.key)||e.preventDefault()});function errHighlight(e){const t=document.getElementById(e);t.classList.add("error"),setTimeout(()=>t.classList.remove("error"),2e3)}function calcRisk(){const e=document.getElementById("risk_amount"),t=document.getElementById("capital"),n=document.getElementById("risk_percent"),r=document.getElementById("entry_price"),o=document.getElementById("stop_loss_price"),i=document.getElementById("result");let c=parseFloat(e.value),l=parseFloat(t.value),a=parseFloat(n.value),s=parseFloat(r.value),u=parseFloat(o.value);if(isNaN(s)||s<=0)return i.innerText="請輸入有效的開倉價格！",errHighlight("entry_price"),void 0;if(isNaN(u)||u<=0)return i.innerText="請輸入有效的止損價格！",errHighlight("stop_loss_price"),void 0;let f=Math.abs(u-s);if(0===f)return void(i.innerText="開倉價格與止損價格不能相同！");let d=f/s;if((isNaN(c)||c<=0)&&(isNaN(l)||isNaN(a)||a<=0))return i.innerText="請輸入『預期損失金額』或『本金+預期虧損百分比』！",errHighlight("risk_amount"),void 0;c=isNaN(c)||c<=0?l*(a/100):c;let p=c/d;i.innerText=`名義價值: ${p.toFixed(2)} USDT`}</script>
 </body>
 </html>
